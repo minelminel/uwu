@@ -3,7 +3,7 @@
 """
 @author: michael lawrenson
 @date:   11/20/19
-@git:    
+@git:    https://github.com/minelminel/uwu.git
 @remarks:
     $ sudo mv ./uwu /usr/local/bin/uwu && chmod +x /usr/local/bin/uwu
     $ uwu
