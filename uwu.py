@@ -11,13 +11,20 @@
     ✧･ﾟ: *✧･ﾟ♡*(ᵘʷᵘ)*♡･ﾟ✧*:･ﾟ✧ echo "preface strings with /uwu/ to translate"
     ✧･ﾟ: *✧･ﾟ♡*(ᵘʷᵘ)*♡･ﾟ✧*:･ﾟ✧ echo "use CTRL+C to quit, or type /exit/"
 """
-import os, sys, requests
+import os, re, sys, requests
+from colorama import init as colorama_init
+from termcolor import colored
 
-# ==> prompt
+def init():
+    colorama_init()
+
+init()
+senpai_says = "<<nuzzles>>"
 sad_emoji = ".·´¯`(>▂<)´¯`·."
 happy_emoji = "✧･ﾟ: *✧･ﾟ♡*(ᵘʷᵘ)*♡･ﾟ✧*:･ﾟ✧"
 prompt = " "
-PS1 = happy_emoji + prompt
+_PS1 = happy_emoji + prompt
+PS1 = colored(_PS1, 'magenta')
 
 def translate(phrase):
     url = "https://translate.yandex.net/api/v1.5/tr.json/translate"
@@ -33,10 +40,12 @@ def translate(phrase):
 def parse_input(cmd):
     if cmd=='exit':
         sys.exit()
-    if cmd.startswith('uwu'):
+    elif cmd.startswith('uwu'):
         phrase = cmd.replace('uwu','').strip()
-        output = translate(phrase) if phrase else fallback_msg
+        output = translate(phrase) if phrase else sad_emoji
         print(output)
+    elif re.search('notice me senpai', cmd):
+        print(senpai_says)
     else:
         os.system(cmd)
 
@@ -47,6 +56,7 @@ def main_loop(_func, _input):
     except KeyboardInterrupt:
         sys.exit(0)
     except Exception as e:
+        print(str(e))
         sys.exit(1)
 
 if __name__ == '__main__':
